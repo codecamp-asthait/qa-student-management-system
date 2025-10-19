@@ -7,6 +7,9 @@ router.get('/', (req, res) => {
 });
 
 // Student API routes
-router.use('/api', require('./student'));
+router.use('/api/student', require('./student'));
+
+// Teacher API routes
+router.use('/api/teacher', require('./teacher'));
 
 module.exports = router;
