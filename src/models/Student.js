@@ -2,9 +2,9 @@ const mongoose = require('mongoose');
 
 const studentSchema = new mongoose.Schema({
   name: { type: String, required: true },
-  email: { type: String, required: true, unique: true, index: true },
+  email: { type: String, required: true, unique: true },
   department: { type: String, required: true, enum: ["CSE", "BBA", "MBA", "LAW", "PHARMACY", "ENGLISH"] },
-  registrationId: { type: Number, required: true, unique: true, index: true },
+  registrationId: { type: Number, required: true, unique: true },
   age: { type: Number }
 }, {
   timestamps: true

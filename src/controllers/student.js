@@ -19,9 +19,9 @@ exports.getAllStudents = async (req, res) => {
   }
 };
 
-exports.getStudentById = async (req, res) => {
+exports.getStudentByRegistrationId = async (req, res) => {
   try {
-    const student = await Student.findOne({ registrationId: req.params.id });
+    const student = await Student.findOne({ registrationId: req.params.registrationId });
     if (!student) return res.status(404).json({ error: 'Student not found' });
     if (student) {
       const filtered = student.toObject();
@@ -91,9 +91,6 @@ exports.updateStudent = async (req, res) => {
     department: Joi.string().valid('CSE', 'BBA', 'MBA', 'LAW', 'PHARMACY', 'ENGLISH').messages({
       'any.only': 'Department must be one of CSE, BBA, MBA, LAW, PHARMACY, ENGLISH'
     }),
-    registrationId: Joi.number().integer().messages({
-      'number.base': 'Registration ID must be a number'
-    }),
     age: Joi.number().integer().messages({
       'number.base': 'Age must be a number'
     })
@@ -102,10 +99,15 @@ exports.updateStudent = async (req, res) => {
   if (error) {
     return res.status(400).json({ error: error.details[0].message });
   }
+
+  // Remove registrationId from update data if it exists
+  const updateData = { ...req.body };
+  delete updateData.registrationId;
+
   try {
     const student = await Student.findOneAndUpdate(
-      { registrationId: req.params.id },
-      req.body,
+      { registrationId: req.params.registrationId },
+      updateData,
       { new: true, runValidators: true }
     );
     if (!student) return res.status(404).json({ error: 'Student not found' });
@@ -127,7 +129,7 @@ exports.updateStudent = async (req, res) => {
 
 exports.deleteStudent = async (req, res) => {
   try {
-    const student = await Student.findOneAndDelete({ registrationId: req.params.id });
+    const student = await Student.findOneAndDelete({ registrationId: req.params.registrationId });
     if (!student) return res.status(404).json({ error: 'Student not found' });
     res.json({ message: 'Student deleted successfully' });
   } catch (err) {
