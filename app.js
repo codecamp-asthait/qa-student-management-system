@@ -3,8 +3,11 @@ const express = require('express');
 const mongoose = require('mongoose');
 const app = express();
 const routes = require('./src/routes');
+const swaggerDocs = require('./swagger');
+const cors = require('cors');
 
 // Middleware
+app.use(cors());
 app.use(express.json());
 
 // Connect to MongoDB using env
@@ -19,6 +22,9 @@ mongoose.connect(process.env.MONGO_URI)
 app.use('/', routes);
 
 const PORT = process.env.PORT || 3000;
+
+swaggerDocs(app, PORT);
+
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
