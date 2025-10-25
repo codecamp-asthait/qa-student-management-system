@@ -4,10 +4,8 @@ const mongoose = require('mongoose');
 const app = express();
 const routes = require('./src/routes');
 const swaggerDocs = require('./swagger');
-const cors = require('cors');
 
 // Middleware
-app.use(cors());
 app.use(express.json());
 
 // Connect to MongoDB using env
