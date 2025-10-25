@@ -23,25 +23,10 @@ const options = {
 };
 
 const swaggerSpec = swaggerJSDoc(options);
+const swaggerDocument = swaggerSpec;
 
-// Serve Swagger JSON separately
-const swaggerDocs = (app, port) => {
-  // Endpoint for Swagger JSON
-  app.get("/api-docs/swagger.json", (req, res) => {
-    res.setHeader("Content-Type", "application/json");
-    res.send(swaggerSpec);
-  });
-
-  // Serve Swagger UI
-  app.use(
-    "/api-docs",
-    swaggerUi.serve,
-    swaggerUi.setup(swaggerSpec, {
-      swaggerUrl: "/api-docs/swagger.json", // explicitly point to JSON endpoint
-    })
-  );
-
-  console.log(`📘 Swagger Docs available at: http://localhost:${port}/api-docs`);
+const swaggerDocs = (app) => {
+  app.use("/api-docs", swaggerUi.serveFiles(swaggerDocument, {}), swaggerUi.setup(swaggerDocument));
 };
 
 module.exports = swaggerDocs;
