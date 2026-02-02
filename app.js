@@ -2,8 +2,20 @@ require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
 const app = express();
+const cors = require('cors');
 const routes = require('./src/routes');
 const swaggerDocs = require('./swagger');
+
+
+// cors
+
+app.use(cors({
+  origin: "*",
+  methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization"],
+}));
+
+app.options("*", cors()); // handle preflight
 
 // Middleware
 app.use(express.json());
