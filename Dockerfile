@@ -30,8 +30,3 @@ USER appuser
 
 # Start the app
 CMD ["node", "app.js"]
-
-# docker build \
-#   --build-arg MONGO_URI_ARG="mongodb+srv://codecamp_db_user:codecamp123456@cluster0.vyrgkuw.mongodb.net/codecamp" \
-#   --build-arg PORT_ARG=5170 \
-#   -t codecampastha/student-management-system:latest .
