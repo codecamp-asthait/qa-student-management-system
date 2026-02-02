@@ -12,10 +12,7 @@ const options = {
     },
     servers: [
       {
-        url: "https://qa-student-management-system.vercel.app/",
-      },
-      {
-        url: "http://localhost:8888",
+        url: "http://localhost:5170",
       },
     ],
   },
